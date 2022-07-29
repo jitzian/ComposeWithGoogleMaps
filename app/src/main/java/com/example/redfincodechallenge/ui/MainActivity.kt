@@ -1,4 +1,4 @@
-package com.example.redfincodechallenge
+package com.example.redfincodechallenge.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
