@@ -3,5 +3,6 @@
     <string name="location_TEXT">Location:</string>
     <string name="loading_dot_dot_dot_TEXT">Loading…</string>
     <string name="no_internet_connection_TEXT">No Internet Connection</string>
+    <string name="service_hours_TEXT">Service Hours:</string>
 
 </resources>
