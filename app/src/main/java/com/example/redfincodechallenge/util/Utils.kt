@@ -1,7 +1,8 @@
 package com.example.redfincodechallenge.util
 
-import android.util.Log
+import com.example.redfincodechallenge.constants.GlobalConstants.Companion.AM_BEFORE_NOON
 import com.example.redfincodechallenge.constants.GlobalConstants.Companion.DATE_FORMATTING_AM_PM
+import com.example.redfincodechallenge.constants.GlobalConstants.Companion.PM_AFTER_NOON
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,23 +30,13 @@ fun getCurrentHour(): String {
     return formatTime.format(date)
 }
 
-fun convertDate(input: String) {
-    /*val displayFormat = SimpleDateFormat("HH:mm")
-    val parseFormat = SimpleDateFormat("hh:mm a")
-    val date = parseFormat.parse("10:30 PM")*/
-    val formatTime = SimpleDateFormat(DATE_FORMATTING_AM_PM, Locale.ROOT)
-    val convertedDate = formatTime.parse(input)
-
-    Log.e("UTIL", "convertDate::$convertedDate")
-}
-
 fun checkAMHours(startTime: String): Boolean {
     val isAvailable: Boolean
     val currentHour = getCurrentHour()
 
-    isAvailable = if (currentHour.contains("AM")) {
-        val currentHourAlone = currentHour.substringBefore("AM")
-        val startTimeHourAlone = startTime.substringAfter("AM")
+    isAvailable = if (currentHour.contains(AM_BEFORE_NOON)) {
+        val currentHourAlone = currentHour.substringBefore(AM_BEFORE_NOON)
+        val startTimeHourAlone = startTime.substringAfter(AM_BEFORE_NOON)
         currentHourAlone >= startTimeHourAlone
     } else {
         true
@@ -58,9 +49,9 @@ fun checkPMHours(endTime: String): Boolean {
     val isAvailable: Boolean
     val currentHour = getCurrentHour()
 
-    isAvailable = if (currentHour.contains("PM")) {
-        val currentHourAlone = currentHour.substringBefore("PM")
-        val startTimeHourAlone = endTime.substringAfter("PM")
+    isAvailable = if (currentHour.contains(PM_AFTER_NOON)) {
+        val currentHourAlone = currentHour.substringBefore(PM_AFTER_NOON)
+        val startTimeHourAlone = endTime.substringAfter(PM_AFTER_NOON)
         currentHourAlone <= startTimeHourAlone
     } else {
         true
@@ -69,6 +60,9 @@ fun checkPMHours(endTime: String): Boolean {
     return isAvailable
 }
 
+/**
+ * Function that returns the week day based on current Timing
+ * */
 fun getWeekDay(): Days = when (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
     Calendar.SUNDAY -> {
         Days.SUNDAY
