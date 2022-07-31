@@ -8,7 +8,7 @@ import com.example.redfincodechallenge.rest.RestApi
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     private val injector = DaggerComponentInjector.builder()
         .networkModule(NetworkModule(baseUrl = GlobalConstants.baseURl))
@@ -17,7 +17,7 @@ class BaseViewModel : ViewModel() {
     @Inject
     lateinit var retrofit: Retrofit
 
-    private lateinit var restApi: RestApi
+    lateinit var restApi: RestApi
 
     init {
         inject()
