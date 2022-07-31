@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RedfinCodeChallenge</string>
+    <string name="location_TEXT">Location:</string>
+    <string name="loading_dot_dot_dot_TEXT">Loading…</string>
+    <string name="no_internet_connection_TEXT">No Internet Connection</string>
+
 </resources>
