@@ -1,6 +1,5 @@
 package com.example.redfincodechallenge.rest.model
 
-
 import com.google.gson.annotations.SerializedName
 
 data class ResultApiItem(
