@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -72,6 +73,20 @@ fun ItemRow(data: ResultApiItem) {
                 text = data.optionaltext.toString(),
                 style = MaterialTheme.typography.caption
             )
+            Divider()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.dimen_8_dp))
+            ) {
+                Text(
+                    text = stringResource(id = R.string.service_hours_TEXT),
+                    style = MaterialTheme.typography.caption
+                )
+                Text(
+                    text = "${data.starttime} - ${data.endtime}",
+                    style = MaterialTheme.typography.caption,
+                )
+            }
         }
     }
 }
