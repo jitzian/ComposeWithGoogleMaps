@@ -17,10 +17,16 @@ import com.example.redfincodechallenge.ui.app.RedFinScreen
 import com.example.redfincodechallenge.ui.common.ErrorScreen
 import com.example.redfincodechallenge.ui.common.LoadingScreen
 import com.example.redfincodechallenge.util.TAG
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination(start = true)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainScreenState(mainViewModel: MainViewModel = viewModel()) {
+fun MainScreenState(
+    navigator: DestinationsNavigator,
+    mainViewModel: MainViewModel = viewModel(),
+) {
     val state by mainViewModel.state.collectAsState()
     mainViewModel.fetchData()
 
@@ -45,7 +51,7 @@ fun MainScreen(data: List<ResultApiItem>) {
             LazyColumn(state = state) {
                 items(data) { item ->
                     ItemRow(data = item, onItemSelected = {
-                        Log.e(this.TAG(), "MainScreen::CLICKED")
+                        Log.e(this.TAG(), "MainScreen::CLICKED:: ${item.applicant}")
                     })
                 }
             }
