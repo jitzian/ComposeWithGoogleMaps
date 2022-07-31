@@ -1,5 +1,8 @@
 package com.example.redfincodechallenge.mainView.view
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -13,7 +16,9 @@ import com.example.redfincodechallenge.rest.model.ResultApiItem
 import com.example.redfincodechallenge.ui.app.RedFinScreen
 import com.example.redfincodechallenge.ui.common.ErrorScreen
 import com.example.redfincodechallenge.ui.common.LoadingScreen
+import com.example.redfincodechallenge.util.TAG
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreenState(mainViewModel: MainViewModel = viewModel()) {
     val state by mainViewModel.state.collectAsState()
@@ -39,7 +44,9 @@ fun MainScreen(data: List<ResultApiItem>) {
         Scaffold {
             LazyColumn(state = state) {
                 items(data) { item ->
-                    ItemRow(data = item)
+                    ItemRow(data = item, onItemSelected = {
+                        Log.e(this.TAG(), "MainScreen::CLICKED")
+                    })
                 }
             }
         }

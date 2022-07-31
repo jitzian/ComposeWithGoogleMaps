@@ -1,6 +1,7 @@
 package com.example.redfincodechallenge.mainView.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -20,7 +21,7 @@ import com.example.redfincodechallenge.constants.GlobalConstants
 import com.example.redfincodechallenge.rest.model.ResultApiItem
 
 @Composable
-fun ItemRow(data: ResultApiItem) {
+fun ItemRow(data: ResultApiItem, onItemSelected: (ResultApiItem) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +30,10 @@ fun ItemRow(data: ResultApiItem) {
                 vertical = dimensionResource(
                     id = R.dimen.dimen_8_dp
                 )
-            ),
+            )
+            .clickable {
+                onItemSelected(data)
+            },
         elevation = dimensionResource(id = R.dimen.dimen_4_dp)
     ) {
         Column(
