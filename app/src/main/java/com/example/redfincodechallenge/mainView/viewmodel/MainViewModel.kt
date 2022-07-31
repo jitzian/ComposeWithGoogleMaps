@@ -6,7 +6,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.example.redfincodechallenge.base.BaseViewModel
 import com.example.redfincodechallenge.constants.GlobalConstants
-import com.example.redfincodechallenge.rest.model.ResultApi
 import com.example.redfincodechallenge.rest.model.ResultApiItem
 import com.example.redfincodechallenge.util.*
 import kotlinx.coroutines.*
@@ -22,7 +21,6 @@ class MainViewModel : BaseViewModel() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchData() = viewModelScope.launch {
-        Log.e(this.TAG(), "fetchData::${getWeekDay()} - ${getCurrentHour()}")
         try {
             withTimeout(GlobalConstants.MAX_TIME_OUT) {
                 withContext(Dispatchers.IO) {
@@ -46,18 +44,16 @@ class MainViewModel : BaseViewModel() {
                             }.map {
                                 it
                             }
-
                             Log.e(this.TAG(), "fetchData::filteredData::${filteredData.size}")
 
-                            //_state.value = UIState.Success(data = result)
                             _state.value = UIState.Success(data = filteredData)
                         }
                     }
                 }
             }
-        } catch (toce: TimeoutCancellationException) {
-            Log.e(this.TAG(), "fetchData::${toce.message}")
-            _state.value = UIState.Error(message = toce.message ?: "An error occurred")
+        } catch (tce: TimeoutCancellationException) {
+            Log.e(this.TAG(), "fetchData::${tce.message}")
+            _state.value = UIState.Error(message = tce.message ?: "An error occurred")
         } catch (e: Exception) {
             Log.e(this.TAG(), "fetchData::${e.message}")
             _state.value = UIState.Error(message = e.message ?: "General Error: An error occurred")
@@ -69,7 +65,6 @@ class MainViewModel : BaseViewModel() {
      * */
     sealed class UIState {
         object Loading : UIState()
-        //class Success(val data: ResultApi) : UIState()
         class Success(val data: List<ResultApiItem>) : UIState()
         class Error(val message: String) : UIState()
     }
