@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import coil.compose.rememberImagePainter
@@ -42,8 +43,9 @@ fun ItemRow(data: ResultApiItem) {
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.dimen_4_dp)))
+                    .aspectRatio(2f)
+                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.dimen_4_dp))),
+                contentScale = ContentScale.FillBounds
             )
             Text(
                 text = data.applicant.toString(),
