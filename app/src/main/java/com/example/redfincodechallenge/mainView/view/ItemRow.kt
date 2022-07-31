@@ -7,6 +7,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -57,11 +58,14 @@ fun ItemRow(data: ResultApiItem) {
             ) {
                 Text(
                     text = stringResource(id = R.string.location_TEXT),
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.body1
                 )
                 Text(
                     text = data.location.toString(),
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .align(CenterVertically)
                 )
             }
             Text(
