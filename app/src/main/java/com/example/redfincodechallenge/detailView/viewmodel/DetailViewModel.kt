@@ -17,7 +17,10 @@ class DetailViewModel : BaseViewModel() {
     val state: StateFlow<UIState>
         get() = _state.asStateFlow()
 
-    fun getListOfMarkers(data: List<ResultApiItem>) {
+    /**
+     * Function that will generate a lis of [MarkerOptions] that will be used to setup the markers
+     * */
+    fun generateListOfMarkers(data: List<ResultApiItem>) {
         if (_state.value == UIState.Loading) {
             if (data.isNotEmpty()) {
                 val listOfMarkerOptions = mutableListOf<MarkerOptions>()
@@ -38,12 +41,15 @@ class DetailViewModel : BaseViewModel() {
                 }
                 _state.value = UIState.Success(markers = listOfMarkerOptions)
             } else {
-                Log.e(this.TAG(), "getListOfMarkers::No markers available")
+                Log.e(this.TAG(), "generateListOfMarkers::No markers available")
                 _state.value = UIState.Error("No markers available")
             }
         }
     }
 
+    /**
+     * Sealed class for representing all the available states in the Google Maps
+     * */
     sealed class UIState {
         object Loading : UIState()
         class Success(val markers: List<MarkerOptions>) : UIState()
