@@ -10,7 +10,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.redfincodechallenge.R
 import com.example.redfincodechallenge.destinations.DetailScreenStateDestination
 import com.example.redfincodechallenge.mainView.model.Items
 import com.example.redfincodechallenge.mainView.viewmodel.MainViewModel
@@ -18,6 +20,7 @@ import com.example.redfincodechallenge.rest.model.ResultApiItem
 import com.example.redfincodechallenge.ui.app.RedFinScreen
 import com.example.redfincodechallenge.ui.common.ErrorScreen
 import com.example.redfincodechallenge.ui.common.LoadingScreen
+import com.example.redfincodechallenge.ui.common.MainTopBar
 import com.example.redfincodechallenge.util.TAG
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -53,7 +56,14 @@ fun MainScreen(navigator: DestinationsNavigator, data: List<ResultApiItem>) {
     val state = rememberLazyListState()
 
     RedFinScreen {
-        Scaffold {
+        Scaffold(
+            topBar = {
+                MainTopBar(
+                    title = stringResource(id = R.string.red_fin_TEXT),
+                    showBackButton = false
+                )
+            }
+        ) {
             LazyColumn(state = state) {
                 items(data) { item ->
                     ItemRow(data = item, onItemSelected = {
