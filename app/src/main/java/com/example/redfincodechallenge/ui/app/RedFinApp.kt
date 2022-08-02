@@ -8,11 +8,6 @@ import androidx.compose.ui.Modifier
 import com.example.redfincodechallenge.ui.theme.RedfinCodeChallengeTheme
 
 @Composable
-fun RedFinApp() {
-
-}
-
-@Composable
 fun RedFinScreen(content: @Composable () -> Unit) {
     RedfinCodeChallengeTheme {
         // A surface container using the 'background' color from the theme
