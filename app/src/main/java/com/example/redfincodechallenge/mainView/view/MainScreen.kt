@@ -67,6 +67,7 @@ fun MainScreen(navigator: DestinationsNavigator, data: List<ResultApiItem>) {
                     ItemRow(data = item, onItemSelected = {
                         navigator.navigate(
                             DetailScreenStateDestination(
+                                selectedItem = item,
                                 Items(data = data)
                             )
                         )

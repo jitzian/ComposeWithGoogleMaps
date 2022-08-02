@@ -23,23 +23,27 @@ class DetailViewModel : BaseViewModel() {
     fun generateListOfMarkers(data: List<ResultApiItem>) {
         if (_state.value == UIState.Loading) {
             if (data.isNotEmpty()) {
-                val listOfMarkerOptions = mutableListOf<MarkerOptions>()
+                val listOfMarkerData = mutableListOf<MarkerData>()
                 data.forEach { item ->
                     safeLet(
                         item.applicant,
                         item.latitude,
-                        item.longitude
-                    ) { location, latitude, longitude ->
+                        item.longitude,
+                        item.locationid
+                    ) { applicant, latitude, longitude, locationid ->
 
-                        val latLong = LatLng(latitude.toDouble(), longitude.toDouble())
-                        val markerOption = MarkerOptions()
-                            .title(location)
-                            .position(latLong)
+                        listOfMarkerData.add(
+                            MarkerData(
+                                applicant = applicant,
+                                locationid = locationid,
+                                latitude = latitude.toDouble(),
+                                longitude = longitude.toDouble()
+                            )
 
-                        listOfMarkerOptions.add(markerOption)
+                        )
                     }
                 }
-                _state.value = UIState.Success(markers = listOfMarkerOptions)
+                _state.value = UIState.Success(data = listOfMarkerData)
             } else {
                 Log.e(this.TAG(), "generateListOfMarkers::No markers available")
                 _state.value = UIState.Error("No markers available")
@@ -47,12 +51,19 @@ class DetailViewModel : BaseViewModel() {
         }
     }
 
+    data class MarkerData(
+        val applicant: String = "",
+        val locationid: String? = null,
+        val latitude: Double? = null,
+        val longitude: Double? = null
+    )
+
     /**
      * Sealed class for representing all the available states in the Google Maps
      * */
     sealed class UIState {
         object Loading : UIState()
-        class Success(val markers: List<MarkerOptions>) : UIState()
+        class Success(val data: List<MarkerData>) : UIState()
         class Error(val message: String) : UIState()
     }
 

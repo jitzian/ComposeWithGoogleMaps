@@ -10,17 +10,18 @@ import com.example.redfincodechallenge.R
 import com.example.redfincodechallenge.destinations.MainScreenStateDestination
 import com.example.redfincodechallenge.detailView.viewmodel.DetailViewModel
 import com.example.redfincodechallenge.mainView.model.Items
+import com.example.redfincodechallenge.rest.model.ResultApiItem
 import com.example.redfincodechallenge.ui.app.RedFinScreen
 import com.example.redfincodechallenge.ui.common.ErrorScreen
 import com.example.redfincodechallenge.ui.common.LoadingScreen
 import com.example.redfincodechallenge.ui.common.MainTopBar
-import com.google.android.libraries.maps.model.MarkerOptions
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
 fun DetailScreenState(
+    selectedItem: ResultApiItem,
     items: Items,
     detailViewModel: DetailViewModel = viewModel(),
     navigator: DestinationsNavigator
@@ -35,16 +36,16 @@ fun DetailScreenState(
         }
         is DetailViewModel.UIState.Success -> {
             DetailScreen(
-                data = (state as DetailViewModel.UIState.Success).markers,
-                onUpClick = {
-                    with(navigator) {
-                        navigate(
-                            MainScreenStateDestination()
-                        )
-                        popBackStack()
-                    }
+                data = (state as DetailViewModel.UIState.Success).data,
+                selectedItem = selectedItem
+            ) {
+                with(navigator) {
+                    navigate(
+                        MainScreenStateDestination()
+                    )
+                    popBackStack()
                 }
-            )
+            }
         }
         is DetailViewModel.UIState.Error -> {
             ErrorScreen(message = (state as DetailViewModel.UIState.Error).message)
@@ -54,7 +55,8 @@ fun DetailScreenState(
 
 @Composable
 fun DetailScreen(
-    data: List<MarkerOptions>,
+    data: List<DetailViewModel.MarkerData>,
+    selectedItem: ResultApiItem,
     onUpClick: () -> Unit
 ) {
     RedFinScreen {
@@ -67,7 +69,7 @@ fun DetailScreen(
                 )
             }
         ) {
-            GoogleMaps(data)
+            GoogleMaps(data, selectedItem)
         }
     }
 }

@@ -15,8 +15,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.example.redfincodechallenge.detailView.viewmodel.DetailViewModel
+import com.example.redfincodechallenge.rest.model.ResultApiItem
+import com.example.redfincodechallenge.util.safeLet
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.MapView
+import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.MarkerOptions
 import com.google.maps.android.ktx.R
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun GoogleMaps(data: List<MarkerOptions>) {
+fun GoogleMaps(data: List<DetailViewModel.MarkerData>, selectedItem: ResultApiItem) {
     val mapView = rememberMapViewWithLifeCycle()
 
     Box {
@@ -36,17 +40,38 @@ fun GoogleMaps(data: List<MarkerOptions>) {
             AndroidView({ mapView }) { mapView ->
                 CoroutineScope(Dispatchers.Main).launch {
 
-                    mapView.getMapAsync {
-                        it.mapType = 1
-                        it.uiSettings.isZoomControlsEnabled = true
+                    mapView.getMapAsync { map ->
+                        map.mapType = 1
+                        map.uiSettings.isZoomControlsEnabled = true
 
-                        data.forEach { marker ->
-                            it.addMarker(marker)
+                        data.forEach { item ->
+                            safeLet(item.latitude, item.longitude) { latitude, longitude ->
+                                val markerOption = MarkerOptions()
+                                    .title(item.applicant)
+                                    .position(LatLng(latitude, longitude))
+                                map.addMarker(markerOption)
+                            }
                         }
 
-                        it.moveCamera(
-                            CameraUpdateFactory.newLatLngZoom(data.first().position, 12f)
-                        )
+                        val markerToBeInCamera = data.filter { item ->
+                            item.locationid == selectedItem.locationid
+                        }.map { it }
+
+                        if (markerToBeInCamera.size == 1) {
+                            safeLet(
+                                markerToBeInCamera.first().latitude,
+                                markerToBeInCamera.first().longitude
+                            ) { safeLatitude, safeLongitude ->
+                                map.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(
+                                            safeLatitude,
+                                            safeLongitude
+                                        ), 18f
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
