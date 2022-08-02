@@ -37,9 +37,12 @@ fun DetailScreenState(
             DetailScreen(
                 data = (state as DetailViewModel.UIState.Success).markers,
                 onUpClick = {
-                    navigator.navigate(
-                        MainScreenStateDestination()
-                    )
+                    with(navigator) {
+                        navigate(
+                            MainScreenStateDestination()
+                        )
+                        popBackStack()
+                    }
                 }
             )
         }
