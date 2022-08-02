@@ -1,7 +1,6 @@
 package com.example.redfincodechallenge.mainView.view
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,7 +20,6 @@ import com.example.redfincodechallenge.ui.app.RedFinScreen
 import com.example.redfincodechallenge.ui.common.ErrorScreen
 import com.example.redfincodechallenge.ui.common.LoadingScreen
 import com.example.redfincodechallenge.ui.common.MainTopBar
-import com.example.redfincodechallenge.util.TAG
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -67,7 +65,6 @@ fun MainScreen(navigator: DestinationsNavigator, data: List<ResultApiItem>) {
             LazyColumn(state = state) {
                 items(data) { item ->
                     ItemRow(data = item, onItemSelected = {
-                        Log.e(this.TAG(), "MainScreen::CLICKED:: ${item.applicant}")
                         navigator.navigate(
                             DetailScreenStateDestination(
                                 Items(data = data)
