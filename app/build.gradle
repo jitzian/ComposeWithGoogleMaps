@@ -87,9 +87,6 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${deps.retrofitVersionLib}"
     implementation "com.squareup.retrofit2:converter-gson:${deps.gsonVersionLib}"
 
-
-
-
 }
 
 // LiveData & ViewModel
@@ -155,9 +152,6 @@ dependencies {
 
 
 dependencies {
-    //state
-    //implementation "androidx.compose.runtime:runtime-livedata:1.1.0-beta03"
-    //implementation "androidx.compose.runtime:runtime-livedata:1.0.0-alpha07"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
 }
@@ -173,4 +167,13 @@ dependencies {
     implementation 'io.github.raamcosta.compose-destinations:core:1.1.2-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.1.2-beta'
 
+}
+
+//Google Maps
+dependencies {
+    implementation("com.android.volley:volley:1.2.1")
+
+    implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
+    implementation("com.google.maps.android:maps-v3-ktx:2.2.0")
+    implementation("androidx.fragment:fragment:1.5.1")
 }
