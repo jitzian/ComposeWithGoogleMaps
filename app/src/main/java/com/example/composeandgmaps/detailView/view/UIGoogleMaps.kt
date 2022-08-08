@@ -27,6 +27,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * Note: Took these links as reference to implement Maps
+ * https://www.rrtutors.com/tutorials/How-do-i-load-GoogleMaps-with-Jetpack-Compose
+ * https://rrtutors.com/tutorials/Jetpack-Compose-How-to-Add-Multiple-Markers-to-Google-Maps
+ * */
+
 @Composable
 fun GoogleMaps(data: List<DetailViewModel.MarkerData>, selectedItem: ResultApiItem) {
     val mapView = rememberMapViewWithLifeCycle()
