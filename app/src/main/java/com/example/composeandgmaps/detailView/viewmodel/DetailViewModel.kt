@@ -2,6 +2,7 @@ package com.example.composeandgmaps.detailView.viewmodel
 
 import android.util.Log
 import com.example.composeandgmaps.base.BaseViewModel
+import com.example.composeandgmaps.detailView.model.MarkerData
 import com.example.composeandgmaps.rest.model.ResultApiItem
 import com.example.composeandgmaps.util.TAG
 import com.example.composeandgmaps.util.safeLet
@@ -35,10 +36,12 @@ class DetailViewModel : BaseViewModel() {
                             MarkerData(
                                 applicant = applicant,
                                 locationid = locationid,
+                                location = item.location,
                                 latitude = latitude.toDouble(),
-                                longitude = longitude.toDouble()
+                                longitude = longitude.toDouble(),
+                                locationDesc = item.locationdesc,
+                                optionalText = item.optionaltext
                             )
-
                         )
                     }
                 }
@@ -49,13 +52,6 @@ class DetailViewModel : BaseViewModel() {
             }
         }
     }
-
-    data class MarkerData(
-        val applicant: String = "",
-        val locationid: String? = null,
-        val latitude: Double? = null,
-        val longitude: Double? = null
-    )
 
     /**
      * Sealed class for representing all the available states in the Google Maps

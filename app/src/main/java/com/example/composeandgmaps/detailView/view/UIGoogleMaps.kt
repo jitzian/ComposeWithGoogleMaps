@@ -1,12 +1,16 @@
 package com.example.composeandgmaps.detailView.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,12 +19,15 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import com.example.composeandgmaps.detailView.viewmodel.DetailViewModel
+import com.example.composeandgmaps.detailView.model.MarkerData
 import com.example.composeandgmaps.rest.model.ResultApiItem
+import com.example.composeandgmaps.util.TAG
 import com.example.composeandgmaps.util.safeLet
 import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.GoogleMap
 import com.google.android.libraries.maps.MapView
 import com.google.android.libraries.maps.model.LatLng
+import com.google.android.libraries.maps.model.Marker
 import com.google.android.libraries.maps.model.MarkerOptions
 import com.google.maps.android.ktx.R
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +41,8 @@ import kotlinx.coroutines.launch
  * */
 
 @Composable
-fun GoogleMaps(data: List<DetailViewModel.MarkerData>, selectedItem: ResultApiItem) {
+fun GoogleMaps(data: List<MarkerData>, selectedItem: ResultApiItem) {
+//fun <T: MarkerData>GoogleMaps(data: List<T>, selectedItem: T) {
     val mapView = rememberMapViewWithLifeCycle()
 
     Box {
@@ -55,6 +63,20 @@ fun GoogleMaps(data: List<DetailViewModel.MarkerData>, selectedItem: ResultApiIt
                                 val markerOption = MarkerOptions()
                                     .title(item.applicant)
                                     .position(LatLng(latitude, longitude))
+
+                                map.setOnMarkerClickListener(object :
+                                    GoogleMap.OnMarkerClickListener {
+                                    override fun onMarkerClick(p0: Marker?): Boolean {
+                                        Log.e(this.TAG(), "onMarkerClick: ${p0?.title}")
+                                        if (item.applicant == p0?.title) {
+                                            Log.e(
+                                                this.TAG(),
+                                                "onMarkerClick: ${item.applicant} || ${item.optionalText}"
+                                            )
+                                        }
+                                        return false
+                                    }
+                                })
                                 map.addMarker(markerOption)
                             }
                         }

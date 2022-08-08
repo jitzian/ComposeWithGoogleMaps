@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.composeandgmaps.R
 import com.example.composeandgmaps.destinations.MainScreenStateDestination
+import com.example.composeandgmaps.detailView.model.MarkerData
 import com.example.composeandgmaps.detailView.viewmodel.DetailViewModel
 import com.example.composeandgmaps.mainView.model.Items
 import com.example.composeandgmaps.rest.model.ResultApiItem
@@ -55,7 +56,7 @@ fun DetailScreenState(
 
 @Composable
 fun DetailScreen(
-    data: List<DetailViewModel.MarkerData>,
+    data: List<MarkerData>,
     selectedItem: ResultApiItem,
     onUpClick: () -> Unit
 ) {
